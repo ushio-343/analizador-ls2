@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <title>Analizador Léxico y Sintáctico</title>
+</head>
+
+<body>
+<div class="container-lexico">
+    <div class="container-content-lexico">
+        <h1>Analizador Léxico y Sintáctico</h1>
+        <div class="container-elements-lexicos">
+            <form action="/" method="post">
+                <textarea name="code" cols="30" rows="10" placeholder="Enter code here">{{ code }}</textarea>
+                <button class="button-value-lexico" type="submit">Analyze</button>
+            </form>
+            <table>
+                <thead>
+                <tr>
+                    <th>Token</th>
+                    <th>PR</th>
+                    <th>ID</th>
+                    <th>SIM</th>
+                    <th>ERRORES</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for entry in token_data %}
+                    <tr>
+                        <td>{{ entry.token }}</td>
+                        <td>{{ entry.PR }}</td>
+                        <td>{{ entry.ID }}</td>
+                        <td>{{ entry.SIM }}</td>
+                        <td>{{ entry.ERROR }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h2>Token Counts</h2>
+            <p>Palabras reservadas: {{ total_reserved }}</p>
+            <p>Identificadores: {{ counters['ID'] }}</p>
+            <p>Signo +: {{ counters['PLUS'] }}</p>
+            <p>Signo =: {{ counters['EQUAL'] }}</p>
+            <p>Paréntesis abiertos: {{ counters['OPEN_PAREN'] }}</p>
+            <p>Paréntesis cerrados: {{ counters['CLOSE_PAREN'] }}</p>
+            <p>Punto y coma: {{ counters['SEMICOLON'] }}</p>
+            <p>Comillas: {{ counters['ACENTO'] }}</p>
+            <p>Comas: {{ counters['COMMA'] }}</p>
+            <p>Llaves abiertas: {{ counters['OPEN_BRACE'] }}</p>
+            <p>Llaves cerradas: {{ counters['CLOSE_BRACE'] }}</p>
+            <p>Errores: {{ total_errors }}</p>
+        </div>
+        <div>
+            <h2>Syntax Analysis</h2>
+            {% if syntax_correct %}
+                <p>Sintaxis correcta.</p>
+            {% else %}
+                <p>Sintaxis incorrecta.</p>
+            {% endif %}
+            {% if syntax_errors %}
+                <h3>Syntax Errors</h3>
+                <ul>
+                    {% for error in syntax_errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

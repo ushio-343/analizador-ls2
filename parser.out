@@ -1,0 +1,260 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    COMMA
+    DOT
+    EQUAL
+    NUMBER
+    PLUS
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PUBLIC CLASS ID OPEN_BRACE main_method CLOSE_BRACE
+Rule 2     main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+Rule 3     statement_list -> statement
+Rule 4     statement_list -> statement_list statement
+Rule 5     statement -> println_statement
+Rule 6     println_statement -> PRINTLN OPEN_PAREN STRING CLOSE_PAREN SEMICOLON
+
+Terminals, with rules where they appear
+
+CLASS                : 1
+CLOSE_BRACE          : 1 2 2
+CLOSE_PAREN          : 2 6
+COMMA                : 
+DOT                  : 
+EQUAL                : 
+ID                   : 1
+MAIN                 : 2
+NUMBER               : 
+OPEN_BRACE           : 1 2
+OPEN_PAREN           : 2 6
+PLUS                 : 
+PRINTLN              : 6
+PUBLIC               : 1 2
+SEMICOLON            : 6
+STATIC               : 2
+STRING               : 2 6
+VOID                 : 2
+error                : 
+
+Nonterminals, with rules where they appear
+
+main_method          : 1
+println_statement    : 5
+program              : 0
+statement            : 3 4
+statement_list       : 2 4
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PUBLIC CLASS ID OPEN_BRACE main_method CLOSE_BRACE
+
+    PUBLIC          shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PUBLIC . CLASS ID OPEN_BRACE main_method CLOSE_BRACE
+
+    CLASS           shift and go to state 3
+
+
+state 3
+
+    (1) program -> PUBLIC CLASS . ID OPEN_BRACE main_method CLOSE_BRACE
+
+    ID              shift and go to state 4
+
+
+state 4
+
+    (1) program -> PUBLIC CLASS ID . OPEN_BRACE main_method CLOSE_BRACE
+
+    OPEN_BRACE      shift and go to state 5
+
+
+state 5
+
+    (1) program -> PUBLIC CLASS ID OPEN_BRACE . main_method CLOSE_BRACE
+    (2) main_method -> . PUBLIC STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+
+    PUBLIC          shift and go to state 6
+
+    main_method                    shift and go to state 7
+
+state 6
+
+    (2) main_method -> PUBLIC . STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+
+    STATIC          shift and go to state 8
+
+
+state 7
+
+    (1) program -> PUBLIC CLASS ID OPEN_BRACE main_method . CLOSE_BRACE
+
+    CLOSE_BRACE     shift and go to state 9
+
+
+state 8
+
+    (2) main_method -> PUBLIC STATIC . VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+
+    VOID            shift and go to state 10
+
+
+state 9
+
+    (1) program -> PUBLIC CLASS ID OPEN_BRACE main_method CLOSE_BRACE .
+
+    $end            reduce using rule 1 (program -> PUBLIC CLASS ID OPEN_BRACE main_method CLOSE_BRACE .)
+
+
+state 10
+
+    (2) main_method -> PUBLIC STATIC VOID . MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+
+    MAIN            shift and go to state 11
+
+
+state 11
+
+    (2) main_method -> PUBLIC STATIC VOID MAIN . OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+
+    OPEN_PAREN      shift and go to state 12
+
+
+state 12
+
+    (2) main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN . STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+
+    STRING          shift and go to state 13
+
+
+state 13
+
+    (2) main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN STRING . CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+
+    CLOSE_BRACE     shift and go to state 14
+
+
+state 14
+
+    (2) main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE . OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN
+
+    OPEN_BRACE      shift and go to state 15
+
+
+state 15
+
+    (2) main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE . statement_list CLOSE_BRACE CLOSE_PAREN
+    (3) statement_list -> . statement
+    (4) statement_list -> . statement_list statement
+    (5) statement -> . println_statement
+    (6) println_statement -> . PRINTLN OPEN_PAREN STRING CLOSE_PAREN SEMICOLON
+
+    PRINTLN         shift and go to state 19
+
+    statement_list                 shift and go to state 16
+    statement                      shift and go to state 17
+    println_statement              shift and go to state 18
+
+state 16
+
+    (2) main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list . CLOSE_BRACE CLOSE_PAREN
+    (4) statement_list -> statement_list . statement
+    (5) statement -> . println_statement
+    (6) println_statement -> . PRINTLN OPEN_PAREN STRING CLOSE_PAREN SEMICOLON
+
+    CLOSE_BRACE     shift and go to state 20
+    PRINTLN         shift and go to state 19
+
+    statement                      shift and go to state 21
+    println_statement              shift and go to state 18
+
+state 17
+
+    (3) statement_list -> statement .
+
+    CLOSE_BRACE     reduce using rule 3 (statement_list -> statement .)
+    PRINTLN         reduce using rule 3 (statement_list -> statement .)
+
+
+state 18
+
+    (5) statement -> println_statement .
+
+    CLOSE_BRACE     reduce using rule 5 (statement -> println_statement .)
+    PRINTLN         reduce using rule 5 (statement -> println_statement .)
+
+
+state 19
+
+    (6) println_statement -> PRINTLN . OPEN_PAREN STRING CLOSE_PAREN SEMICOLON
+
+    OPEN_PAREN      shift and go to state 22
+
+
+state 20
+
+    (2) main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE . CLOSE_PAREN
+
+    CLOSE_PAREN     shift and go to state 23
+
+
+state 21
+
+    (4) statement_list -> statement_list statement .
+
+    CLOSE_BRACE     reduce using rule 4 (statement_list -> statement_list statement .)
+    PRINTLN         reduce using rule 4 (statement_list -> statement_list statement .)
+
+
+state 22
+
+    (6) println_statement -> PRINTLN OPEN_PAREN . STRING CLOSE_PAREN SEMICOLON
+
+    STRING          shift and go to state 24
+
+
+state 23
+
+    (2) main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN .
+
+    CLOSE_BRACE     reduce using rule 2 (main_method -> PUBLIC STATIC VOID MAIN OPEN_PAREN STRING CLOSE_BRACE OPEN_BRACE statement_list CLOSE_BRACE CLOSE_PAREN .)
+
+
+state 24
+
+    (6) println_statement -> PRINTLN OPEN_PAREN STRING . CLOSE_PAREN SEMICOLON
+
+    CLOSE_PAREN     shift and go to state 25
+
+
+state 25
+
+    (6) println_statement -> PRINTLN OPEN_PAREN STRING CLOSE_PAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 26
+
+
+state 26
+
+    (6) println_statement -> PRINTLN OPEN_PAREN STRING CLOSE_PAREN SEMICOLON .
+
+    CLOSE_BRACE     reduce using rule 6 (println_statement -> PRINTLN OPEN_PAREN STRING CLOSE_PAREN SEMICOLON .)
+    PRINTLN         reduce using rule 6 (println_statement -> PRINTLN OPEN_PAREN STRING CLOSE_PAREN SEMICOLON .)
+
